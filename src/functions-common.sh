@@ -56,14 +56,14 @@ function download_md5 {
 
     if [[ "$URL" == *"ftp.redhat.com"* ]]
     then
-      SED="sed -i"
+      SED=" -i"
       if [[ "$OSTYPE" == "darwin"* ]]; 
       then
-        SED="sed -i ''"
+        SED=" -i ''"
       fi
         wget --output-file=$BUILD_HOME/work/build.log -O download/$FILENAME.md5 $DIR_URL/MD5SUM || STATUS=$?
-        SED "s/$FILENAME/download\/$FILENAME/g" download/$FILENAME.md5
-        SED "/$FILENAME/!d" download/$FILENAME.md5
+        sed $SED "s/$FILENAME/download\/$FILENAME/g" download/$FILENAME.md5
+        sed $SED "/$FILENAME/!d" download/$FILENAME.md5
     else
         wget --output-file=$BUILD_HOME/work/build.log -O download/$FILENAME.md5 $DIR_URL/$FILENAME.md5 || STATUS=$?
         echo "  download/$FILENAME" >> download/$FILENAME.md5 
